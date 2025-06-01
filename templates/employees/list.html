@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Employees</h2>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Department</th>
+        <th>Created By</th>
+        {% if user.role == 'manager' %}<th>Actions</th>{% endif %}
+    </tr>
+    {% for employee in employees %}
+    <tr>
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.email }}</td>
+        <td>{{ employee.department }}</td>
+        <td>{{ employee.created_by.username }}</td>
+        {% if user.role == 'manager' %}
+        <td>
+            <a href="{% url 'employee_edit' employee.pk %}">Edit</a>
+            <a href="{% url 'employee_delete' employee.pk %}">Delete</a>
+        </td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
